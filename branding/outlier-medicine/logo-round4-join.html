@@ -1,0 +1,280 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0"><title>Outlier Medicine — The Join</title>
+<style>
+  :root {
+    --paper: #F7F5EE;
+    --surface: #EFECE0;
+    --ink: #20211A;
+    --ink-soft: #4A4B3E;
+    --muted: #7C7B66;
+    --moss: #575C2E;
+    --deep: #2C2E1D;
+    --sage: #B9B8A4;
+    --mid-tone: #888A69;
+    --fade-theme: url(#tf-moss);
+    --line: rgba(32, 33, 26, 0.16);
+    --line-faint: rgba(32, 33, 26, 0.08);
+    --serif: "Palatino Linotype", Palatino, "Book Antiqua", "URW Palladio L", Georgia, serif;
+    --glyphic: Optima, Seravek, Candara, "Gill Sans", "Gill Sans MT", "Trebuchet MS", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #16170F;
+      --surface: #1E1F15;
+      --ink: #E8E5D6;
+      --ink-soft: #BDBAA6;
+      --muted: #8D8B74;
+      --moss: #9AA05F;
+      --mid-tone: #A9AC82;
+      --fade-theme: url(#tf-moss-dk);
+      --line: rgba(232, 229, 214, 0.18);
+      --line-faint: rgba(232, 229, 214, 0.08);
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #F7F5EE;
+    --surface: #EFECE0;
+    --ink: #20211A;
+    --ink-soft: #4A4B3E;
+    --muted: #7C7B66;
+    --moss: #575C2E;
+    --mid-tone: #888A69;
+    --fade-theme: url(#tf-moss);
+    --line: rgba(32, 33, 26, 0.16);
+    --line-faint: rgba(32, 33, 26, 0.08);
+  }
+  :root[data-theme="dark"] {
+    --paper: #16170F;
+    --surface: #1E1F15;
+    --ink: #E8E5D6;
+    --ink-soft: #BDBAA6;
+    --muted: #8D8B74;
+    --moss: #9AA05F;
+    --mid-tone: #A9AC82;
+    --fade-theme: url(#tf-moss-dk);
+    --line: rgba(232, 229, 214, 0.18);
+    --line-faint: rgba(232, 229, 214, 0.08);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
+  .eyebrow { font-family: var(--glyphic); font-size: 11.5px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--muted); }
+  h1 { font-weight: 400; font-size: clamp(30px, 4.4vw, 46px); line-height: 1.15; margin: 18px 0 0; text-wrap: balance; }
+  h2 { font-weight: 400; font-size: clamp(24px, 3vw, 32px); margin: 0; }
+  .section-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: clamp(28px, 4vw, 44px); }
+  .section-head .no { font-family: var(--glyphic); font-size: 12px; letter-spacing: 0.22em; color: var(--moss); }
+  .prose { max-width: 64ch; color: var(--ink-soft); }
+  .prose + .prose { margin-top: 1.05em; }
+  .prose em { color: var(--ink); }
+  section { border-top: 1px solid var(--line); padding: clamp(48px, 7vw, 88px) 0; }
+
+  header.page { padding: clamp(48px, 7vw, 80px) 0 clamp(36px, 5vw, 56px); }
+  header.page .intro { margin-top: 26px; }
+
+  /* mark color scheme: --m main stroke, --t trailing stroke, --md the blend step */
+  .markbox { --m: var(--moss); --t: #B9B8A4; --md: var(--mid-tone); --fadefill: var(--fade-theme); }
+  .markbox.inv, .mark-panel.inv { --m: #EFECE0; --t: #B9B8A4; --md: #D4D2C2; --fadefill: url(#tf-bone); }
+
+  .hero-panel {
+    margin-top: clamp(36px, 5vw, 56px);
+    border: 1px solid var(--line-faint);
+    background: var(--surface);
+    padding: clamp(48px, 8vw, 96px) 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .hero-panel svg.mark { width: clamp(170px, 24vw, 230px); height: auto; }
+  .hero-word { margin-top: 42px; font-family: var(--glyphic); font-weight: 300; font-size: clamp(24px, 3.4vw, 34px); letter-spacing: 0.42em; text-indent: 0.42em; color: var(--ink); }
+  .hero-desc { margin-top: 12px; font-family: var(--glyphic); font-weight: 300; font-size: clamp(10px, 1.3vw, 12px); letter-spacing: 0.72em; text-indent: 0.72em; color: var(--muted); }
+  .hero-note { margin-top: 30px; font-style: italic; color: var(--muted); font-size: 15px; }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 900px) { .cards { grid-template-columns: 1fr; } }
+  .card { border: 1px solid var(--line-faint); background: var(--surface); display: flex; flex-direction: column; }
+  .mark-panel {
+    position: relative;
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(32px, 4vw, 48px);
+    border-bottom: 1px solid var(--line-faint);
+    transition: background 0.35s ease;
+  }
+  .mark-panel.inv { background: #2C2E1D; }
+  .mark-panel > svg { width: min(170px, 56%); height: auto; }
+  .detail {
+    position: absolute;
+    right: 14px;
+    bottom: 14px;
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: inherit;
+    overflow: hidden;
+    display: flex;
+  }
+  .detail svg { width: 100%; height: 100%; }
+  .detail-tag {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    font-family: var(--glyphic);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .mark-panel.inv .detail-tag { color: rgba(239,236,224,0.55); }
+  .mark-panel.inv .detail { border-color: rgba(239,236,224,0.25); }
+  .flip {
+    position: absolute; top: 12px; right: 12px;
+    font-family: var(--glyphic); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); background: none; border: 1px solid var(--line); border-radius: 2px;
+    padding: 5px 10px; cursor: pointer;
+  }
+  .mark-panel.inv .flip { color: rgba(239,236,224,0.6); border-color: rgba(239,236,224,0.25); }
+  .flip:focus-visible { outline: 2px solid var(--moss); outline-offset: 2px; }
+
+  .card-body { padding: clamp(18px, 2.6vw, 26px); display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .card-title { display: flex; align-items: baseline; gap: 12px; }
+  .card-title .name { font-family: var(--glyphic); font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase; }
+  .card-story { font-size: 15px; color: var(--ink-soft); flex: 1; }
+  .card-story em { color: var(--ink); }
+
+  footer { border-top: 1px solid var(--line); padding: 40px 0 56px; }
+  .foot-note { font-family: var(--glyphic); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+  footer .prose { margin-top: 14px; }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Light-weight crescents: outer r100, inner r93 offset 8.1 along the NE axis -->
+    <path id="lt-moss" d="M 216.14 92.47 A 100 100 0 1 1 147.53 23.86 A 93 93 0 1 0 216.14 92.47 Z"/>
+    <path id="lt-sage" d="M 23.86 147.53 A 100 100 0 1 1 92.47 216.14 A 93 93 0 1 0 23.86 147.53 Z"/>
+
+    <linearGradient id="tf-moss" gradientUnits="userSpaceOnUse" x1="85" y1="155" x2="205" y2="35">
+      <stop offset="0" stop-color="#575C2E"/>
+      <stop offset="0.45" stop-color="#575C2E"/>
+      <stop offset="1" stop-color="#B9B8A4"/>
+    </linearGradient>
+    <linearGradient id="tf-moss-dk" gradientUnits="userSpaceOnUse" x1="85" y1="155" x2="205" y2="35">
+      <stop offset="0" stop-color="#9AA05F"/>
+      <stop offset="0.45" stop-color="#9AA05F"/>
+      <stop offset="1" stop-color="#B9B8A4"/>
+    </linearGradient>
+    <linearGradient id="tf-bone" gradientUnits="userSpaceOnUse" x1="85" y1="155" x2="205" y2="35">
+      <stop offset="0" stop-color="#EFECE0"/>
+      <stop offset="0.45" stop-color="#EFECE0"/>
+      <stop offset="1" stop-color="#B9B8A4"/>
+    </linearGradient>
+
+    <g id="join-overlap">
+      <use href="#lt-sage" style="fill: var(--t)"/>
+      <use href="#lt-moss" style="fill: var(--m)"/>
+    </g>
+    <g id="join-step">
+      <use href="#lt-sage" style="fill: var(--t)"/>
+      <use href="#lt-moss" transform="rotate(-8 120 120)" style="fill: var(--md)"/>
+      <use href="#lt-moss" style="fill: var(--m)"/>
+    </g>
+    <g id="join-fade">
+      <use href="#lt-sage" style="fill: var(--t)"/>
+      <use href="#lt-moss" style="fill: var(--fadefill)"/>
+    </g>
+  </defs>
+</svg>
+
+<header class="page">
+  <div class="wrap">
+    <div class="eyebrow">Outlier Medicine — Identity, Round Four</div>
+    <h1>The join, made invisible</h1>
+    <div class="intro">
+      <p class="prose">You caught the flaw precisely. I had drawn a paper-colored outline between the two strokes to separate them — and that outline breaks the circle. Your original never does this: its strokes overlap <em>tone on tone</em>, one shading into the other, so the ring reads as one continuous gesture.</p>
+      <p class="prose">The outline is gone. Below are three ways the strokes can meet — including the tonal fade I recommend, where the transition cannot be found at all. Everything you approved stays: the Light stroke, the lighter Optima, the whisper descriptor.</p>
+    </div>
+
+    <div class="hero-panel markbox">
+      <svg class="mark" viewBox="0 0 240 240" role="img" aria-label="The double enso, light weight, with the strokes fading into one another">
+        <use href="#join-fade"/>
+      </svg>
+      <div class="hero-word">OUTLIER</div>
+      <div class="hero-desc">EASTERN&#8202;&#8202;MEDICINE</div>
+      <p class="hero-note">The recommendation: one ring, two strokes, no visible seam — Moss dissolving into Sage.</p>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="section-head"><span class="no">01</span><h2>Three ways to close the circle</h2></div>
+    <p class="prose" style="margin-bottom: 36px;">Same Light geometry in all three — only the meeting of the strokes changes. The round window on each card magnifies the transition zone so you can judge the join itself.</p>
+    <div class="cards">
+
+      <div class="card">
+        <div class="mark-panel markbox">
+          <button class="flip" type="button">Reverse</button>
+          <svg viewBox="0 0 240 240" role="img" aria-label="Join A: strokes overlap directly"><use href="#join-overlap"/></svg>
+          <span class="detail-tag">Detail</span>
+          <div class="detail" aria-hidden="true"><svg viewBox="170 42 68 68"><use href="#join-overlap"/></svg></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title"><span class="name">A — The Overlap</span></div>
+          <p class="card-story">The strokes simply lie on one another, no outline. The Moss tail tapers to nothing across the Sage body. Clean and honest; the crossing is quiet but still findable.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="mark-panel markbox">
+          <button class="flip" type="button">Reverse</button>
+          <svg viewBox="0 0 240 240" role="img" aria-label="Join B: a mid-tone shadow step between the strokes"><use href="#join-step"/></svg>
+          <span class="detail-tag">Detail</span>
+          <div class="detail" aria-hidden="true"><svg viewBox="170 42 68 68"><use href="#join-step"/></svg></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title"><span class="name">B — The Shadow Step</span></div>
+          <p class="card-story"><em>Your original's trick.</em> A third, middle tone sits between the two strokes — the brush passing over wet ink. Dimensional, hand-made warmth; three tones to manage in reproduction.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="mark-panel markbox">
+          <button class="flip" type="button">Reverse</button>
+          <svg viewBox="0 0 240 240" role="img" aria-label="Join C: the moss stroke fades tonally into the sage stroke"><use href="#join-fade"/></svg>
+          <span class="detail-tag">Detail</span>
+          <div class="detail" aria-hidden="true"><svg viewBox="170 42 68 68"><use href="#join-fade"/></svg></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title"><span class="name">C — The Fade — recommended</span></div>
+          <p class="card-story">Moss dissolves into Sage along the stroke itself. <em>There is no seam to find</em> — one continuous ring that happens to begin dark and end pale. The most finessed of the three, and the most Apple.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-note">Next step</div>
+    <p class="prose">Say which join closes the circle for you — A, B, or C — and the mark is locked: final vectors in every weight, the lockup set, and then the brand book.</p>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.flip').forEach((btn) => {
+    btn.addEventListener('click', () => btn.closest('.mark-panel').classList.toggle('inv'));
+  });
+</script>
+</body></html>
