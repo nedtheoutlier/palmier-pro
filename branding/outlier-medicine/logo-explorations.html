@@ -1,0 +1,308 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0"><title>Outlier Medicine — Logo Explorations</title>
+<style>
+  :root {
+    --paper: #F7F5EE;
+    --surface: #EFECE0;
+    --ink: #20211A;
+    --ink-soft: #4A4B3E;
+    --muted: #7C7B66;
+    --moss: #575C2E;
+    --deep: #2C2E1D;
+    --sage: #B9B8A4;
+    --line: rgba(32, 33, 26, 0.16);
+    --line-faint: rgba(32, 33, 26, 0.08);
+    --serif: "Palatino Linotype", Palatino, "Book Antiqua", "URW Palladio L", Georgia, serif;
+    --glyphic: Optima, Seravek, Candara, "Gill Sans", "Gill Sans MT", "Trebuchet MS", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #16170F;
+      --surface: #1E1F15;
+      --ink: #E8E5D6;
+      --ink-soft: #BDBAA6;
+      --muted: #8D8B74;
+      --moss: #9AA05F;
+      --line: rgba(232, 229, 214, 0.18);
+      --line-faint: rgba(232, 229, 214, 0.08);
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #F7F5EE;
+    --surface: #EFECE0;
+    --ink: #20211A;
+    --ink-soft: #4A4B3E;
+    --muted: #7C7B66;
+    --moss: #575C2E;
+    --line: rgba(32, 33, 26, 0.16);
+    --line-faint: rgba(32, 33, 26, 0.08);
+  }
+  :root[data-theme="dark"] {
+    --paper: #16170F;
+    --surface: #1E1F15;
+    --ink: #E8E5D6;
+    --ink-soft: #BDBAA6;
+    --muted: #8D8B74;
+    --moss: #9AA05F;
+    --line: rgba(232, 229, 214, 0.18);
+    --line-faint: rgba(232, 229, 214, 0.08);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
+
+  .eyebrow { font-family: var(--glyphic); font-size: 11.5px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--muted); }
+  h1 { font-weight: 400; font-size: clamp(30px, 4.4vw, 46px); line-height: 1.15; letter-spacing: 0.01em; margin: 18px 0 0; text-wrap: balance; }
+  .prose { max-width: 64ch; color: var(--ink-soft); }
+  .prose + .prose { margin-top: 1.05em; }
+  .prose em { color: var(--ink); }
+
+  header.page { padding: clamp(48px, 7vw, 88px) 0 clamp(36px, 5vw, 56px); }
+  header.page .intro { margin-top: 28px; }
+
+  .board { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding-bottom: clamp(64px, 8vw, 104px); }
+  @media (max-width: 860px) { .board { grid-template-columns: 1fr; } }
+
+  .card { border: 1px solid var(--line-faint); background: var(--surface); display: flex; flex-direction: column; }
+  .mark-panel {
+    position: relative;
+    background: var(--surface);
+    color: var(--moss);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(36px, 4.5vw, 56px);
+    border-bottom: 1px solid var(--line-faint);
+    transition: background 0.35s ease, color 0.35s ease;
+  }
+  .mark-panel.inv { background: #2C2E1D; color: #EFECE0; }
+  .mark-panel svg { width: min(200px, 52%); height: auto; }
+  .flip {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-family: var(--glyphic);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  .mark-panel.inv .flip { color: rgba(239,236,224,0.6); border-color: rgba(239,236,224,0.25); }
+  .flip:focus-visible { outline: 2px solid var(--moss); outline-offset: 2px; }
+
+  .card-body { padding: clamp(20px, 3vw, 30px); display: flex; flex-direction: column; gap: 14px; flex: 1; }
+  .card-title { display: flex; align-items: baseline; gap: 14px; }
+  .card-title .no { font-family: var(--glyphic); font-size: 12px; letter-spacing: 0.22em; color: var(--moss); }
+  .card-title .name { font-family: var(--glyphic); font-size: 15px; letter-spacing: 0.2em; text-transform: uppercase; }
+  .card-story { font-size: 15.5px; color: var(--ink-soft); flex: 1; }
+  .card-story em { color: var(--ink); }
+
+  .strip { display: flex; align-items: center; gap: 22px; border-top: 1px solid var(--line-faint); padding-top: 16px; }
+  .strip .cell { display: flex; align-items: center; justify-content: center; color: var(--moss); }
+  .strip svg { display: block; }
+  .strip .fav { width: 26px; height: 26px; border-radius: 6px; background: #2C2E1D; color: #EFECE0; }
+  .strip .fav svg { width: 16px; height: 16px; }
+  .strip-label { margin-left: auto; font-family: var(--glyphic); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
+  footer { border-top: 1px solid var(--line); padding: 40px 0 56px; }
+  .foot-note { font-family: var(--glyphic); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+  footer .prose { margin-top: 14px; }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- crescents: boolean of c(120,120) r100 and c(±10 offset) r88 -->
+    <path id="cr-ne" d="M 216.47 93.67 A 100 100 0 1 1 146.33 23.53 A 88 88 0 1 0 216.47 93.67 Z"/>
+    <path id="cr-sw" d="M 23.53 146.33 A 100 100 0 1 1 93.67 216.47 A 88 88 0 1 0 23.53 146.33 Z"/>
+    <!-- lune strokes: outer arc r100, return arc r116, 150-degree span, gaps on the 45/225 axis -->
+    <path id="lune-a" d="M 170.00 33.40 A 100 100 0 0 0 33.40 170.00 A 116 116 0 0 1 170.00 33.40 Z"/>
+    <path id="lune-b" d="M 70.00 206.60 A 100 100 0 0 0 206.60 70.00 A 116 116 0 0 1 70.00 206.60 Z"/>
+
+    <g id="mk-1">
+      <use href="#cr-sw" fill="#B9B8A4"/>
+      <use href="#cr-ne"/>
+    </g>
+    <g id="mk-2">
+      <use href="#lune-a"/>
+      <use href="#lune-b"/>
+    </g>
+    <g id="mk-3">
+      <use href="#lune-a"/>
+      <use href="#lune-b"/>
+      <circle cx="120" cy="120" r="10"/>
+    </g>
+    <g id="mk-4">
+      <use href="#cr-sw"/>
+      <use href="#cr-ne"/>
+      <circle cx="205.56" cy="34.44" r="9.5"/>
+    </g>
+    <g id="mk-5">
+      <use href="#lune-b"/>
+      <use href="#lune-a" transform="translate(-16,-16)"/>
+    </g>
+    <g id="mk-6">
+      <circle cx="213.34" cy="26.66" r="8.5"/>
+      <circle cx="145.88" cy="23.41" r="8.5"/>
+      <circle cx="94.12" cy="23.41" r="8.5"/>
+      <circle cx="49.29" cy="49.29" r="8.5"/>
+      <circle cx="23.41" cy="94.12" r="8.5"/>
+      <circle cx="23.41" cy="145.88" r="8.5"/>
+      <circle cx="49.29" cy="190.71" r="8.5"/>
+      <circle cx="94.12" cy="216.59" r="8.5"/>
+      <circle cx="145.88" cy="216.59" r="8.5"/>
+      <circle cx="190.71" cy="190.71" r="8.5"/>
+      <circle cx="216.59" cy="145.88" r="8.5"/>
+      <circle cx="216.59" cy="94.12" r="8.5"/>
+    </g>
+  </defs>
+</svg>
+
+<header class="page">
+  <div class="wrap">
+    <div class="eyebrow">Outlier Medicine — Identity, Round Two</div>
+    <h1>The double stroke returns</h1>
+    <div class="intro">
+      <p class="prose">Fair verdict on round one: a lone tapered crescent with a point beside it borrows the silhouette of a flag, and no amount of rationale untangles a silhouette. So every direction below keeps the <em>double stroke</em> from your original mark — as a closed swirl or an open pair — so the mass always reads as a ring, never a moon.</p>
+      <p class="prose">Olive stays. <em>Beyond the baseline</em> stays — it says in corporate language what you mean by life beyond the basic minimal requirement. No deck this time: six marks, each with its small-size test and reversed version. React to what pulls; we iterate from there and build the brand book around the winner.</p>
+    </div>
+  </div>
+</header>
+
+<div class="wrap board">
+
+  <div class="card">
+    <div class="mark-panel">
+      <button class="flip" type="button">Reverse</button>
+      <svg viewBox="0 0 240 240" role="img" aria-label="Direction 1: two interlocking tapered strokes forming a closed ring, two-tone"><use href="#mk-1" fill="currentColor"/></svg>
+    </div>
+    <div class="card-body">
+      <div class="card-title"><span class="no">01</span><span class="name">Two Strokes, Refined</span></div>
+      <p class="card-story">Your current mark, mastered. Both interlocking strokes are kept and redrawn on compass geometry, so each taper is exact and the seam between them is deliberate. Moss leads, Sage follows. The ring closes; the swirl carries the motion.</p>
+      <div class="strip">
+        <span class="cell"><svg viewBox="0 0 240 240" width="44" height="44"><use href="#mk-1" fill="currentColor"/></svg></span>
+        <span class="cell"><svg viewBox="0 0 240 240" width="26" height="26"><use href="#mk-1" fill="currentColor"/></svg></span>
+        <span class="cell"><svg viewBox="0 0 240 240" width="16" height="16"><use href="#mk-1" fill="currentColor"/></svg></span>
+        <span class="cell fav"><svg viewBox="0 0 240 240"><use href="#mk-1" fill="currentColor"/></svg></span>
+        <span class="strip-label">Scale test</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="mark-panel">
+      <button class="flip" type="button">Reverse</button>
+      <svg viewBox="0 0 240 240" role="img" aria-label="Direction 2: two tapered strokes with two openings"><use href="#mk-2" fill="currentColor"/></svg>
+    </div>
+    <div class="card-body">
+      <div class="card-title"><span class="no">02</span><span class="name">The Open Pair</span></div>
+      <p class="card-story">Two strokes, two openings. Neither stroke closes the circle alone — together they almost do. The double aperture kills the crescent read outright, and the openness carries the self-mystery: <em>what the circle holds stays partly unknowable.</em></p>
+      <div class="strip">
+        <span class="cell"><svg viewBox="0 0 240 240" width="44" height="44"><use href="#mk-2" fill="currentColor"/></svg></span>
+        <span class="cell"><svg viewBox="0 0 240 240" width="26" height="26"><use href="#mk-2" fill="currentColor"/></svg></span>
+        <span class="cell"><svg viewBox="0 0 240 240" width="16" height="16"><use href="#mk-2" fill="currentColor"/></svg></span>
+        <span class="cell fav"><svg viewBox="0 0 240 240"><use href="#mk-2" fill="currentColor"/></svg></span>
+        <span class="strip-label">Scale test</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="mark-panel">
+      <button class="flip" type="button">Reverse</button>
+      <svg viewBox="0 0 240 240" role="img" aria-label="Direction 3: the open pair with a point at dead center"><use href="#mk-3" fill="currentColor"/></svg>
+    </div>
+    <div class="card-body">
+      <div class="card-title"><span class="no">03</span><span class="name">The Still Point</span></div>
+      <p class="card-story">The open pair, with a single point at dead center. Here the outlier is not outside the circle — <em>it is the self the circle is drawn around.</em> Reads as focus, breath, a pupil. The quietest of the six.</p>
+      <div class="strip">
+        <span class="cell"><svg viewBox="0 0 240 240" width="44" height="44"><use href="#mk-3" fill="currentColor"/></svg></span>
+        <span class="cell"><svg viewBox="0 0 240 240" width="26" height="26"><use href="#mk-3" fill="currentColor"/></svg></span>
+        <span class="cell"><svg viewBox="0 0 240 240" width="16" height="16"><use href="#mk-3" fill="currentColor"/></svg></span>
+        <span class="cell fav"><svg viewBox="0 0 240 240"><use href="#mk-3" fill="currentColor"/></svg></span>
+        <span class="strip-label">Scale test</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="mark-panel">
+      <button class="flip" type="button">Reverse</button>
+      <svg viewBox="0 0 240 240" role="img" aria-label="Direction 4: closed double-stroke ring with a point set beyond it"><use href="#mk-4" fill="currentColor"/></svg>
+    </div>
+    <div class="card-body">
+      <div class="card-title"><span class="no">04</span><span class="name">The Orbit</span></div>
+      <p class="card-story">The full double-stroke ring with the point set beyond it. Because the ring is closed, the pair reads as mass and satellite — an orbit, not a flag. The most literal <em>outlier</em> of the set; keep or kill the dot after seeing 01.</p>
+      <div class="strip">
+        <span class="cell"><svg viewBox="0 0 240 240" width="44" height="44"><use href="#mk-4" fill="currentColor"/></svg></span>
+        <span class="cell"><svg viewBox="0 0 240 240" width="26" height="26"><use href="#mk-4" fill="currentColor"/></svg></span>
+        <span class="cell"><svg viewBox="0 0 240 240" width="16" height="16"><use href="#mk-4" fill="currentColor"/></svg></span>
+        <span class="cell fav"><svg viewBox="0 0 240 240"><use href="#mk-4" fill="currentColor"/></svg></span>
+        <span class="strip-label">Scale test</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="mark-panel">
+      <button class="flip" type="button">Reverse</button>
+      <svg viewBox="0 0 240 240" role="img" aria-label="Direction 5: two strokes sharing a circle, one lifted off it"><use href="#mk-5" fill="currentColor"/></svg>
+    </div>
+    <div class="card-body">
+      <div class="card-title"><span class="no">05</span><span class="name">The Departed Stroke</span></div>
+      <p class="card-story">No dot at all. The two strokes share a circle; one has stepped off it. The outlier is not a point outside the system — <em>it is part of the whole, moved.</em> The most conceptual direction, and the hardest to mistake for anything else.</p>
+      <div class="strip">
+        <span class="cell"><svg viewBox="0 0 240 240" width="44" height="44"><use href="#mk-5" fill="currentColor"/></svg></span>
+        <span class="cell"><svg viewBox="0 0 240 240" width="26" height="26"><use href="#mk-5" fill="currentColor"/></svg></span>
+        <span class="cell"><svg viewBox="0 0 240 240" width="16" height="16"><use href="#mk-5" fill="currentColor"/></svg></span>
+        <span class="cell fav"><svg viewBox="0 0 240 240"><use href="#mk-5" fill="currentColor"/></svg></span>
+        <span class="strip-label">Scale test</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="mark-panel">
+      <button class="flip" type="button">Reverse</button>
+      <svg viewBox="0 0 240 240" role="img" aria-label="Direction 6: twelve points on a circle, one displaced outward"><use href="#mk-6" fill="currentColor"/></svg>
+    </div>
+    <div class="card-body">
+      <div class="card-title"><span class="no">06</span><span class="name">The Twelve</span></div>
+      <p class="card-story">The TCM body clock: twelve meridians, twelve positions on the circle. Eleven hold. One stands apart. Corporate audiences read data; patients read the mala. Weakest at favicon size — shown honestly below.</p>
+      <div class="strip">
+        <span class="cell"><svg viewBox="0 0 240 240" width="44" height="44"><use href="#mk-6" fill="currentColor"/></svg></span>
+        <span class="cell"><svg viewBox="0 0 240 240" width="26" height="26"><use href="#mk-6" fill="currentColor"/></svg></span>
+        <span class="cell"><svg viewBox="0 0 240 240" width="16" height="16"><use href="#mk-6" fill="currentColor"/></svg></span>
+        <span class="cell fav"><svg viewBox="0 0 240 240"><use href="#mk-6" fill="currentColor"/></svg></span>
+        <span class="strip-label">Scale test</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-note">Next step</div>
+    <p class="prose">Name the one or two that pull — or the pieces that do (01's swirl, 05's idea, 03's stillness). Round three narrows to variations of the winner: proportions, stroke weight, dot or no dot, and the wordmark set against it. The brand book waits until the mark is yours.</p>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.flip').forEach((btn) => {
+    btn.addEventListener('click', () => btn.closest('.mark-panel').classList.toggle('inv'));
+  });
+</script>
+</body></html>
