@@ -1,0 +1,334 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0"><title>Outlier Medicine — The Original, Finessed</title>
+<style>
+  :root {
+    --paper: #F7F5EE;
+    --surface: #EFECE0;
+    --ink: #20211A;
+    --ink-soft: #4A4B3E;
+    --muted: #7C7B66;
+    --moss: #575C2E;
+    --deep: #2C2E1D;
+    --sage: #B9B8A4;
+    --line: rgba(32, 33, 26, 0.16);
+    --line-faint: rgba(32, 33, 26, 0.08);
+    --serif: "Palatino Linotype", Palatino, "Book Antiqua", "URW Palladio L", Georgia, serif;
+    --glyphic: Optima, Seravek, Candara, "Gill Sans", "Gill Sans MT", "Trebuchet MS", sans-serif;
+    --neue: "Helvetica Neue", "SF Pro Display", -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #16170F;
+      --surface: #1E1F15;
+      --ink: #E8E5D6;
+      --ink-soft: #BDBAA6;
+      --muted: #8D8B74;
+      --moss: #9AA05F;
+      --line: rgba(232, 229, 214, 0.18);
+      --line-faint: rgba(232, 229, 214, 0.08);
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #F7F5EE;
+    --surface: #EFECE0;
+    --ink: #20211A;
+    --ink-soft: #4A4B3E;
+    --muted: #7C7B66;
+    --moss: #575C2E;
+    --line: rgba(32, 33, 26, 0.16);
+    --line-faint: rgba(32, 33, 26, 0.08);
+  }
+  :root[data-theme="dark"] {
+    --paper: #16170F;
+    --surface: #1E1F15;
+    --ink: #E8E5D6;
+    --ink-soft: #BDBAA6;
+    --muted: #8D8B74;
+    --moss: #9AA05F;
+    --line: rgba(232, 229, 214, 0.18);
+    --line-faint: rgba(232, 229, 214, 0.08);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
+  .eyebrow { font-family: var(--glyphic); font-size: 11.5px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--muted); }
+  h1 { font-weight: 400; font-size: clamp(30px, 4.4vw, 46px); line-height: 1.15; margin: 18px 0 0; text-wrap: balance; }
+  h2 { font-weight: 400; font-size: clamp(24px, 3vw, 32px); margin: 0; }
+  .section-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: clamp(28px, 4vw, 44px); }
+  .section-head .no { font-family: var(--glyphic); font-size: 12px; letter-spacing: 0.22em; color: var(--moss); }
+  .prose { max-width: 64ch; color: var(--ink-soft); }
+  .prose + .prose { margin-top: 1.05em; }
+  .prose em { color: var(--ink); }
+  section { border-top: 1px solid var(--line); padding: clamp(48px, 7vw, 88px) 0; }
+
+  header.page { padding: clamp(48px, 7vw, 80px) 0 clamp(36px, 5vw, 56px); }
+  header.page .intro { margin-top: 26px; }
+
+  /* Hero recommendation */
+  .hero-panel {
+    margin-top: clamp(36px, 5vw, 56px);
+    border: 1px solid var(--line-faint);
+    background: var(--surface);
+    padding: clamp(48px, 8vw, 96px) 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    --panel: var(--surface);
+  }
+  .hero-panel svg.mark { width: clamp(170px, 24vw, 230px); height: auto; }
+  .hero-word {
+    margin-top: 42px;
+    font-family: var(--glyphic);
+    font-weight: 300;
+    font-size: clamp(24px, 3.4vw, 34px);
+    letter-spacing: 0.42em;
+    text-indent: 0.42em;
+    color: var(--ink);
+  }
+  .hero-desc {
+    margin-top: 12px;
+    font-family: var(--glyphic);
+    font-weight: 300;
+    font-size: clamp(10px, 1.3vw, 12px);
+    letter-spacing: 0.72em;
+    text-indent: 0.72em;
+    color: var(--muted);
+  }
+  .hero-note { margin-top: 30px; font-style: italic; color: var(--muted); font-size: 15px; }
+
+  /* Cards */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 900px) { .cards { grid-template-columns: 1fr; } }
+  .card { border: 1px solid var(--line-faint); background: var(--surface); display: flex; flex-direction: column; }
+  .mark-panel {
+    --panel: var(--surface);
+    position: relative;
+    background: var(--panel);
+    color: var(--moss);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(32px, 4vw, 48px);
+    border-bottom: 1px solid var(--line-faint);
+    transition: background 0.35s ease, color 0.35s ease;
+  }
+  .mark-panel.inv { --panel: #2C2E1D; color: #EFECE0; }
+  .mark-panel svg { width: min(170px, 56%); height: auto; }
+  .flip {
+    position: absolute; top: 12px; right: 12px;
+    font-family: var(--glyphic); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); background: none; border: 1px solid var(--line); border-radius: 2px;
+    padding: 5px 10px; cursor: pointer;
+  }
+  .mark-panel.inv .flip { color: rgba(239,236,224,0.6); border-color: rgba(239,236,224,0.25); }
+  .flip:focus-visible { outline: 2px solid var(--moss); outline-offset: 2px; }
+  .seam { stroke: var(--panel); stroke-width: 3; transition: stroke 0.35s ease; }
+
+  .card-body { padding: clamp(18px, 2.6vw, 26px); display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .card-title { display: flex; align-items: baseline; gap: 12px; }
+  .card-title .name { font-family: var(--glyphic); font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase; }
+  .card-title .spec { margin-left: auto; font-family: var(--glyphic); font-size: 10.5px; letter-spacing: 0.14em; color: var(--muted); white-space: nowrap; }
+  .card-story { font-size: 15px; color: var(--ink-soft); flex: 1; }
+  .card-story em { color: var(--ink); }
+  .strip { display: flex; align-items: center; gap: 14px; border-top: 1px solid var(--line-faint); padding-top: 14px; }
+  .strip .cell { display: flex; align-items: center; justify-content: center; color: var(--moss); --panel: var(--surface); }
+  .strip .fav { width: 26px; height: 26px; border-radius: 6px; background: #2C2E1D; color: #EFECE0; --panel: #2C2E1D; }
+  .strip .fav svg { width: 16px; height: 16px; }
+  .strip-label { margin-left: auto; font-family: var(--glyphic); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+
+  /* Type studies */
+  .type-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 900px) { .type-cards { grid-template-columns: 1fr; } }
+  .type-card { border: 1px solid var(--line-faint); background: var(--surface); display: flex; flex-direction: column; }
+  .type-stage {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+    padding: clamp(40px, 5vw, 56px) 20px;
+    border-bottom: 1px solid var(--line-faint);
+    min-height: 300px;
+    --panel: var(--surface);
+  }
+  .type-stage svg { width: 96px; height: auto; color: var(--moss); }
+  .tw { margin-top: 30px; color: var(--ink); }
+  .td { margin-top: 10px; color: var(--muted); }
+  .t-a .tw { font-family: var(--glyphic); font-weight: 400; font-size: 22px; letter-spacing: 0.34em; text-indent: 0.34em; }
+  .t-a .td { font-family: var(--glyphic); font-weight: 400; font-size: 9px;  letter-spacing: 0.62em; text-indent: 0.62em; }
+  .t-b .tw { font-family: var(--glyphic); font-weight: 300; font-size: 21px; letter-spacing: 0.42em; text-indent: 0.42em; }
+  .t-b .td { font-family: var(--glyphic); font-weight: 300; font-size: 8.5px; letter-spacing: 0.72em; text-indent: 0.72em; }
+  .t-c .tw { font-family: var(--neue); font-weight: 200; font-size: 21px; letter-spacing: 0.46em; text-indent: 0.46em; }
+  .t-c .td { font-family: var(--neue); font-weight: 200; font-size: 8.5px; letter-spacing: 0.7em; text-indent: 0.7em; }
+
+  footer { border-top: 1px solid var(--line); padding: 40px 0 56px; }
+  .foot-note { font-family: var(--glyphic); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+  footer .prose { margin-top: 14px; }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Double enso, three weights. Crescent = outer r100 minus inner circle offset along the NE axis. -->
+    <g id="enso-reg">
+      <path fill="#B9B8A4" d="M 23.53 146.33 A 100 100 0 1 1 93.67 216.47 A 88 88 0 1 0 23.53 146.33 Z"/>
+      <path class="seam" d="M 216.47 93.67 A 100 100 0 1 1 146.33 23.53 A 88 88 0 1 0 216.47 93.67 Z"/>
+    </g>
+    <g id="enso-light">
+      <path fill="#B9B8A4" d="M 23.86 147.53 A 100 100 0 1 1 92.47 216.14 A 93 93 0 1 0 23.86 147.53 Z"/>
+      <path class="seam" d="M 216.14 92.47 A 100 100 0 1 1 147.53 23.86 A 93 93 0 1 0 216.14 92.47 Z"/>
+    </g>
+    <g id="enso-ultra">
+      <path fill="#B9B8A4" d="M 23.91 147.67 A 100 100 0 1 1 92.33 216.09 A 96 96 0 1 0 23.91 147.67 Z"/>
+      <path class="seam" d="M 216.09 92.33 A 100 100 0 1 1 147.67 23.91 A 96 96 0 1 0 216.09 92.33 Z"/>
+    </g>
+  </defs>
+</svg>
+
+<header class="page">
+  <div class="wrap">
+    <div class="eyebrow">Outlier Medicine — Identity, Round Three</div>
+    <h1>The original, finessed</h1>
+    <div class="intro">
+      <p class="prose">Clear brief this time: <em>the mark was never the problem.</em> Your double stroke stays exactly as it is — two ensō strokes, Moss leading, Sage following, closed into a ring. What changes is the finish: the strokes shed weight, the seam between them becomes deliberate, and the type stops shouting.</p>
+      <p class="prose">Below: the same mark at three stroke weights, then three settings of the wordmark — all thinner, smaller, quieter. My recommendation sits on top.</p>
+    </div>
+
+    <div class="hero-panel">
+      <svg class="mark" viewBox="0 0 240 240" role="img" aria-label="Recommended: the double enso at light weight">
+        <use href="#enso-light" fill="currentColor" style="color: var(--moss)"/>
+      </svg>
+      <div class="hero-word">OUTLIER</div>
+      <div class="hero-desc">EASTERN&#8202;&#8202;MEDICINE</div>
+      <p class="hero-note">The recommendation: Light stroke, Optima Light wordmark, descriptor at a whisper.</p>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="section-head"><span class="no">01</span><h2>Stroke weight</h2></div>
+    <p class="prose" style="margin-bottom: 36px;">Same compass geometry in every case — only the inner circle moves. Weight is a wardrobe, not a redesign: Apple cuts one symbol in nine weights, and this mark works the same way.</p>
+    <div class="cards">
+
+      <div class="card">
+        <div class="mark-panel">
+          <button class="flip" type="button">Reverse</button>
+          <svg viewBox="0 0 240 240" role="img" aria-label="Regular weight double enso"><use href="#enso-reg" fill="currentColor"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-title"><span class="name">Regular</span><span class="spec">stroke 26</span></div>
+          <p class="card-story">Your current weight. Warm, grounded, a little rustic — right for embroidery and signage, heavier than the brand's voice wants to be.</p>
+          <div class="strip">
+            <span class="cell"><svg viewBox="0 0 240 240" width="44" height="44"><use href="#enso-reg" fill="currentColor"/></svg></span>
+            <span class="cell"><svg viewBox="0 0 240 240" width="26" height="26"><use href="#enso-reg" fill="currentColor"/></svg></span>
+            <span class="cell"><svg viewBox="0 0 240 240" width="16" height="16"><use href="#enso-reg" fill="currentColor"/></svg></span>
+            <span class="cell fav"><svg viewBox="0 0 240 240"><use href="#enso-reg" fill="currentColor"/></svg></span>
+            <span class="strip-label">Scale test</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="mark-panel">
+          <button class="flip" type="button">Reverse</button>
+          <svg viewBox="0 0 240 240" role="img" aria-label="Light weight double enso"><use href="#enso-light" fill="currentColor"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-title"><span class="name">Light — recommended</span><span class="spec">stroke 15</span></div>
+          <p class="card-story"><em>The sweet spot.</em> Sleek enough to sit beside a serif in a boardroom, still enough ink to survive a favicon and a photocopy. This is the working mark.</p>
+          <div class="strip">
+            <span class="cell"><svg viewBox="0 0 240 240" width="44" height="44"><use href="#enso-light" fill="currentColor"/></svg></span>
+            <span class="cell"><svg viewBox="0 0 240 240" width="26" height="26"><use href="#enso-light" fill="currentColor"/></svg></span>
+            <span class="cell"><svg viewBox="0 0 240 240" width="16" height="16"><use href="#enso-light" fill="currentColor"/></svg></span>
+            <span class="cell fav"><svg viewBox="0 0 240 240"><use href="#enso-light" fill="currentColor"/></svg></span>
+            <span class="strip-label">Scale test</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="mark-panel">
+          <button class="flip" type="button">Reverse</button>
+          <svg viewBox="0 0 240 240" role="img" aria-label="Ultralight weight double enso"><use href="#enso-ultra" fill="currentColor"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-title"><span class="name">Ultralight</span><span class="spec">stroke 9</span></div>
+          <p class="card-story">Pure finesse — for large formats only: packaging, signage, the wall behind reception. It thins to nothing at favicon size (see test), so it partners Light rather than replacing it.</p>
+          <div class="strip">
+            <span class="cell"><svg viewBox="0 0 240 240" width="44" height="44"><use href="#enso-ultra" fill="currentColor"/></svg></span>
+            <span class="cell"><svg viewBox="0 0 240 240" width="26" height="26"><use href="#enso-ultra" fill="currentColor"/></svg></span>
+            <span class="cell"><svg viewBox="0 0 240 240" width="16" height="16"><use href="#enso-ultra" fill="currentColor"/></svg></span>
+            <span class="cell fav"><svg viewBox="0 0 240 240"><use href="#enso-ultra" fill="currentColor"/></svg></span>
+            <span class="strip-label">Scale test</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head"><span class="no">02</span><h2>The wordmark, quieter</h2></div>
+    <p class="prose" style="margin-bottom: 36px;">The current logotype is set heavy and wide — it competes with the mark. All three settings below drop the weight, shrink the size relative to the ensō, and let the tracking do the talking. The descriptor is set at a whisper in every case.</p>
+    <div class="type-cards">
+
+      <div class="type-card">
+        <div class="type-stage t-a">
+          <svg viewBox="0 0 240 240"><use href="#enso-light" fill="currentColor"/></svg>
+          <div class="tw">OUTLIER</div>
+          <div class="td">EASTERN&#8202;&#8202;MEDICINE</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title"><span class="name">A — Round One</span></div>
+          <p class="card-story">The setting you liked: Optima at book weight, generous tracking, descriptor small and sage. Balanced, safe, proven.</p>
+        </div>
+      </div>
+
+      <div class="type-card">
+        <div class="type-stage t-b">
+          <svg viewBox="0 0 240 240"><use href="#enso-light" fill="currentColor"/></svg>
+          <div class="tw">OUTLIER</div>
+          <div class="td">EASTERN&#8202;&#8202;MEDICINE</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title"><span class="name">B — Lighter still — recommended</span></div>
+          <p class="card-story"><em>Round One on a fast.</em> Same face, one weight lighter, tracking opened further, descriptor smaller. The letters become part of the whitespace — this pairs best with the thin stroke.</p>
+        </div>
+      </div>
+
+      <div class="type-card">
+        <div class="type-stage t-c">
+          <svg viewBox="0 0 240 240"><use href="#enso-ultra" fill="currentColor"/></svg>
+          <div class="tw">OUTLIER</div>
+          <div class="td">EASTERN&#8202;&#8202;MEDICINE</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title"><span class="name">C — The Neue</span></div>
+          <p class="card-story">Helvetica Neue Ultralight, wide-tracked — the most literally Apple of the three, shown with the Ultralight stroke. Immaculate at scale; cooler and less soulful than Optima. Included so you can feel the difference.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-note">Next step</div>
+    <p class="prose">Pick a stroke weight and a type setting — they mix freely. From there: final geometry, the full lockup set, and then the brand book on the mark you already own.</p>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.flip').forEach((btn) => {
+    btn.addEventListener('click', () => btn.closest('.mark-panel').classList.toggle('inv'));
+  });
+</script>
+</body></html>
